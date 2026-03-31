@@ -1,0 +1,28 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/price-check",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/inventory-check",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/ai-pricing",
+      "schedule": "0 10 * * *"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_WOOCOMMERCE_STORE_URL": "@wc_store_url",
+    "NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY": "@wc_consumer_key",
+    "NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET": "@wc_consumer_secret",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "ADMIN_EMAILS": "@admin_emails",
+    "ADMIN_PASSWORD": "@admin_password",
+    "CRON_SECRET": "@cron_secret",
+    "RESEND_API_KEY": "@resend_api_key",
+    "NOTIFICATION_EMAIL_FROM": "@notification_email_from",
+    "OPENAI_API_KEY": "@openai_api_key"
+  }
+}
