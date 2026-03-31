@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CreditCard, Lock, Check } from 'lucide-react';
+import { CreditCard, Lock, Check, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -65,6 +65,11 @@ export default function CheckoutPage() {
 
     if (step === 'shipping') {
       setStep('payment');
+      return;
+    }
+
+    if (!cart) {
+      toast.error('Cart is empty');
       return;
     }
 
@@ -140,7 +145,7 @@ export default function CheckoutPage() {
     );
   }
 
-  const subtotal = parseFloat(cart.subtotal || '0');
+  const subtotal = cart?.subtotal ?? 0;
 
   if (step === 'complete') {
     return (
@@ -186,7 +191,7 @@ export default function CheckoutPage() {
           </div>
           <div className="flex items-center">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step === 'payment' ? 'bg-primary-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
-              {step === 'complete' ? <Check className="h-4 w-4" /> : '2'}
+              {step === 'payment' ? <Check className="h-4 w-4" /> : '2'}
             </div>
             <span className="ml-2 font-medium">Payment</span>
           </div>

@@ -11,6 +11,7 @@ import {
   Settings,
   FileSpreadsheet,
   Bell,
+  ChevronLeft,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

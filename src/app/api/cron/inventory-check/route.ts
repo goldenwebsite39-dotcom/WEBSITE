@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     alertsSent: 0,
     errors: 0,
     duration: 0,
-    lowStockItems: [] as Array<{ id: number; name: string; sku: string; stock: number }>,
+    lowStockItems: [] as Array<{ id: number; name: string; sku: string; stock_quantity: number }>,
     outOfStockItems: [] as Array<{ id: number; name: string; sku: string }>,
   };
 
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
           id: product.id,
           name: product.name,
           sku: product.sku || 'N/A',
-          stock: stockQty,
+          stock_quantity: stockQty,
         });
       }
     }

@@ -88,7 +88,7 @@ export default function ProductsAdminPage() {
       setLoading(true);
       const data = await woocommerce.getProducts({
         per_page: 100,
-        status: statusFilter === 'all' ? undefined : statusFilter,
+        status: statusFilter === 'all' ? undefined : (statusFilter as 'publish' | 'private' | 'draft'),
       });
       setProducts(data);
       setSelectedProducts(new Set());
@@ -152,7 +152,7 @@ export default function ProductsAdminPage() {
         setEditProduct(null);
         fetchProducts();
       } else {
-        toast.info('No changes to save');
+        toast('No changes to save');
       }
     } catch (error) {
       console.error('Failed to update product:', error);
@@ -233,11 +233,13 @@ export default function ProductsAdminPage() {
 
   const isLowStock = (product: Product) => {
     const threshold = product.low_stock_amount || 10;
-    return product.stock_quantity !== null && product.stock_quantity <= threshold;
+    const stockQty = product.stock_quantity ?? 0;
+    return stockQty <= threshold;
   };
 
   const isOutOfStock = (product: Product) => {
-    return product.stock_quantity === 0;
+    const stockQty = product.stock_quantity ?? 0;
+    return stockQty === 0;
   };
 
   const allSelected = filteredProducts.length > 0 && selectedProducts.size === filteredProducts.length;
@@ -252,7 +254,7 @@ export default function ProductsAdminPage() {
             Manage your product catalog
           </p>
         </div>
-        <Button onClick={() => toast.info('Create product form coming soon')}>
+        <Button onClick={() => toast('Create product form coming soon')}>
           <Plus className="h-4 w-4 mr-2" />
           Add Product
         </Button>

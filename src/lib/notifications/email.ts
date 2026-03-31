@@ -1,7 +1,18 @@
 import { Resend } from 'resend';
 import { db } from '@/lib/db/client';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
+
+function getResend() {
+  if (!resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY is not set');
+    }
+    resend = new Resend(apiKey);
+  }
+  return resend;
+}
 
 export interface EmailTemplateProps {
   title: string;
@@ -139,7 +150,8 @@ export async function sendEmail({
   html: string;
 }) {
   try {
-    const data = await resend.emails.send({
+    const resendClient = getResend();
+    const data = await resendClient.emails.send({
       from: process.env.NOTIFICATION_EMAIL_FROM || 'noreply@example.com',
       to,
       subject,

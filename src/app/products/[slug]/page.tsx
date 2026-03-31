@@ -55,10 +55,11 @@ export default function ProductDetailPage() {
           if (prod.categories?.[0]?.id) {
             const related = await woocommerce.getProducts({
               category: prod.categories[0].id,
-              per_page: 6,
-              exclude: [prod.id],
+              per_page: 10,
             });
-            setRelatedProducts(related);
+            // Filter out current product
+            const filtered = related.filter(p => p.id !== prod.id).slice(0, 6);
+            setRelatedProducts(filtered);
           }
         }
       } catch (error) {
@@ -307,7 +308,7 @@ export default function ProductDetailPage() {
                   className="flex-1"
                   onClick={handleAddToCart}
                   disabled={product.stock_status === 'outofstock' || addingToCart}
-                  loading={addingToCart}
+                  isLoading={addingToCart}
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Add to Cart

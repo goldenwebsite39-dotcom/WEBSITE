@@ -143,7 +143,7 @@ async function checkCompetitorPrices(productName: string, sku?: string) {
   ];
 
   // Simulate finding prices (remove in production, replace with actual scraping)
-  const foundPrices = [];
+  const foundPrices: Array<{ name: string; url: string; price: number }> = [];
   for (const competitor of competitors) {
     // In production, this would be a real HTTP request and HTML parsing
     // const price = await scrapeUrl(competitor.url);

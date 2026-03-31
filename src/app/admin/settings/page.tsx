@@ -68,7 +68,12 @@ export default function SettingsPage() {
   const handleSave = async () => {
     try {
       setSaving(true);
-      await db.updateSettings(settings);
+      // Convert PluginSettings to Record<string, string>
+      const settingsRecord: Record<string, string> = {};
+      Object.keys(settings).forEach((key) => {
+        settingsRecord[key] = settings[key as keyof PluginSettings];
+      });
+      await db.updateSettings(settingsRecord);
       toast.success('Settings saved successfully');
 
       // Reload settings to reflect any server-side changes

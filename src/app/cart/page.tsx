@@ -59,10 +59,10 @@ export default function CartPage() {
     );
   }
 
-  const subtotal = parseFloat(cart.subtotal || '0');
-  const shipping = parseFloat(cart.shipping_total || '0');
-  const tax = parseFloat(cart.tax_total || '0');
-  const total = parseFloat(cart.total || '0') || subtotal + shipping + tax;
+  const subtotal = cart.subtotal ?? 0;
+  const shipping = cart.shipping_total ?? 0;
+  const tax = cart.tax_total ?? 0;
+  const total = cart.total ?? (subtotal + shipping + tax);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -196,7 +196,7 @@ export default function CartPage() {
                     <span className="text-gray-600 dark:text-gray-400">Tax</span>
                     <span className="font-medium">{formatCurrency(tax.toString())}</span>
                   </div>
-                  {cart.discount_total && parseFloat(cart.discount_total) > 0 && (
+                  {cart.discount_total && cart.discount_total > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span>Discount</span>
                       <span className="font-medium">-{formatCurrency(cart.discount_total)}</span>

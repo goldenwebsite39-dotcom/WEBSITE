@@ -19,6 +19,8 @@ interface CartContextType {
     tax_total: number;
     shipping_total: number;
     contents_count: number;
+    discount_total?: number;
+    discount_tax?: number;
   } | null;
   loading: boolean;
   addToCart: (productId: number, quantity?: number, variationId?: number) => Promise<void>;

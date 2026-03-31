@@ -1,12 +1,12 @@
-import axios from 'axios';
-import { parse, flatten } from 'qr-image';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import type { AxiosInstance } from 'axios';
 
 // WooCommerce REST API client
 class WooCommerceClient {
   private storeUrl: string;
   private consumerKey: string;
   private consumerSecret: string;
-  private client: axios.AxiosInstance;
+  private client: AxiosInstance;
 
   constructor() {
     this.storeUrl = process.env.NEXT_PUBLIC_WOOCOMMERCE_STORE_URL || '';
@@ -61,6 +61,10 @@ class WooCommerceClient {
    * GET request with pagination support
    */
   private async get(endpoint: string, params: Record<string, any> = {}) {
+    if (!this.storeUrl) {
+      console.warn('WooCommerce store URL not configured, skipping request');
+      return [];
+    }
     try {
       const response = await this.client.get(endpoint, { params });
       return response.data;
@@ -74,6 +78,10 @@ class WooCommerceClient {
    * POST request
    */
   private async post(endpoint: string, data: any) {
+    if (!this.storeUrl) {
+      console.warn('WooCommerce store URL not configured, skipping request');
+      return null;
+    }
     try {
       const response = await this.client.post(endpoint, data);
       return response.data;
@@ -87,6 +95,10 @@ class WooCommerceClient {
    * PUT request
    */
   private async put(endpoint: string, data: any) {
+    if (!this.storeUrl) {
+      console.warn('WooCommerce store URL not configured, skipping request');
+      return null;
+    }
     try {
       const response = await this.client.put(endpoint, data);
       return response.data;
@@ -100,6 +112,10 @@ class WooCommerceClient {
    * DELETE request
    */
   private async del(endpoint: string) {
+    if (!this.storeUrl) {
+      console.warn('WooCommerce store URL not configured, skipping request');
+      return null;
+    }
     try {
       const response = await this.client.delete(endpoint);
       return response.data;
@@ -121,6 +137,7 @@ class WooCommerceClient {
     tag?: number | string;
     search?: string;
     status?: 'publish' | 'private' | 'draft';
+    stock_status?: 'instock' | 'outofstock' | 'onbackorder';
     orderby?: 'date' | 'id' | 'include' | 'title' | 'slug';
     order?: 'asc' | 'desc';
     parent?: number; // For variations
@@ -128,6 +145,7 @@ class WooCommerceClient {
     attribute_term?: number | string;
     after?: string; // ISO 8601 date
     before?: string;
+    featured?: boolean;
   } = {}): Promise<any[]> {
     const response = await this.get('/products', params);
     return response as any[];
@@ -261,7 +279,8 @@ class WooCommerceClient {
     customer?: number;
     date_created?: string; // ISO 8601
     date_modified?: string;
-    order?: string; // Order number
+    orderby?: 'date' | 'id' | 'number' | 'total';
+    order?: 'asc' | 'desc';
     product?: number;
     } = {}): Promise<any[]> {
     const response = await this.get('/orders', params);

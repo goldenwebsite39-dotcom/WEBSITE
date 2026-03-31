@@ -2,14 +2,16 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { ProductGrid } from '@/components/products/ProductGrid';
+import ProductGrid from '@/components/products/ProductGrid';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
+import { Input } from '@/components/ui/Input';
 import { Sidebar } from '@/components/products/Sidebar';
-import { LoadingSpinner } from '@/components/ui/index';
 import { Filter, X } from 'lucide-react';
 import { woocommerce } from '@/lib/woocommerce/client';
+
+export const dynamic = 'force-dynamic';
 
 export default function ProductsPage() {
   const searchParams = useSearchParams();

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type AxiosInstance } from 'axios';
 
 /**
  * Database client for WooCommerce Extensions custom tables
@@ -9,7 +9,7 @@ import axios from 'axios';
  */
 
 class DatabaseClient {
-  private client: axios.AxiosInstance;
+  private client: AxiosInstance;
 
   constructor() {
     const storeUrl = process.env.NEXT_PUBLIC_WOOCOMMERCE_STORE_URL || '';

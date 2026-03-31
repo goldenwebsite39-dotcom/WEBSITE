@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import {
@@ -99,7 +99,12 @@ export default function AnalyticsPage() {
     }
   };
 
-  const prepareChartData = () => {
+  const totalRevenue = salesReport?.total_sales || 0;
+  const totalOrders = salesReport?.total_orders || orders.length;
+  const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+  const totalProductsSold = topSellers.reduce((sum, p) => sum + p.quantity, 0);
+
+  const chartData = useMemo(() => {
     if (!salesReport?.sales) {
       return [];
     }
@@ -111,12 +116,7 @@ export default function AnalyticsPage() {
       revenue: parseFloat(item.total),
       orders: parseInt(item.orders, 10),
     }));
-  };
-
-  const totalRevenue = salesReport?.total_sales || 0;
-  const totalOrders = salesReport?.total_orders || orders.length;
-  const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
-  const totalProductsSold = topSellers.reduce((sum, p) => sum + p.quantity, 0);
+  }, [salesReport]);
 
   const revenueByCategory = () => {
     // Group top sellers by category (simplified - would need full product data)

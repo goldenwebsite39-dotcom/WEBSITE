@@ -133,13 +133,6 @@ export interface WCOrder {
   payment_method: string;
   payment_method_title: string;
   transaction_id: string;
-  customer_ip_address: string;
-  customer_user_agent: string;
-  customer_note: string;
-  date_created: string;
-  date_modified: string;
-  date_completed: string | null;
-  date_paid: string | null;
   cart_hash: string;
   line_items: Array<{
     id: number;
@@ -195,7 +188,6 @@ export interface WCOrder {
   tax_lines: any[];
   meta_data: any[];
   pament: boolean;
-  order_key: string;
   user_id: number;
   user: any;
 }

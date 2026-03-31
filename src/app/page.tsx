@@ -15,7 +15,7 @@ import {
   Headphones,
 } from 'lucide-react';
 import { woocommerce } from '@/lib/woocommerce/client';
-import { ProductGrid } from '@/components/products/ProductGrid';
+import ProductGrid from '@/components/products/ProductGrid';
 import { Spinner } from '@/components/ui/index';
 
 export default async function HomePage({

@@ -116,7 +116,7 @@ export function ProductCard({ product, showAddToCart = true }: ProductCardProps)
             className="w-full mt-4"
             onClick={handleAddToCart}
             disabled={loading || product.stock_status === 'outofstock'}
-            loading={loading}
+            isLoading={loading}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
             {product.stock_status === 'outofstock' ? 'Out of Stock' : 'Add to Cart'}

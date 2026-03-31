@@ -332,16 +332,18 @@ export default function BulkUploadPage() {
                     Supports standard e-commerce product imports
                   </p>
                 </div>
-                <Button variant="outline" as="label">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Select File
+                <label className="cursor-pointer inline-block">
+                  <Button variant="outline">
+                    <Upload className="h-4 w-4 mr-2" />
+                    Select File
+                  </Button>
                   <input
                     type="file"
                     accept=".csv"
                     onChange={handleFileSelect}
                     className="hidden"
                   />
-                </Button>
+                </label>
               </div>
             )}
           </div>
