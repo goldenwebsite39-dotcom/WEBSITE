@@ -12,6 +12,7 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['sharp'],
   },
+  output: 'standalone',
 }
 
 module.exports = nextConfig

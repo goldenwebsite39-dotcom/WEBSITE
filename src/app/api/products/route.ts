@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { woocommerce } from '@/lib/woocommerce/client';
 
+// Mark route as dynamic to avoid static rendering errors
+export const dynamic = 'force-dynamic';
+
 // GET all products with filters
 export async function GET(request: NextRequest) {
   try {
